@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="configLocation"
+			value="classpath:hibernate.cfg.xml">
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>com.iportfolio.users.Users</value>
+				<value>com.iportfolio.realisations.Realisations</value>
+				<value>com.iportfolio.commentaires.Commentaires</value>
+				<value>com.iportfolio.categories.Categories</value>
+				<value>com.iportfolio.model.dao.Categories</value>
+				<value>com.iportfolio.model.dao.Realisations</value>
+				<value>com.iportfolio.model.dao.Commentaires</value>
+				<value>com.iportfolio.model.dao.Users</value></list>
+		</property></bean>
+	<bean id="UsersDAO" class="com.iportfolio.users.UsersDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="RealisationsDAO"
+		class="com.iportfolio.realisations.RealisationsDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="CommentairesDAO"
+		class="com.iportfolio.commentaires.CommentairesDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="CategoriesDAO"
+		class="com.iportfolio.categories.CategoriesDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	
+	<bean id="usersPL" class="com.iporfilio.beans.UsersPL"
+		abstract="false" scope="singleton" lazy-init="default"
+		autowire="default" >
+		<property name="userDAO">
+			<ref bean="UsersDAO" />
+		</property>
+	</bean>
+	
+	<bean id="realisationsPL" class="com.iporfilio.beans.RealisationsPL"
+		abstract="false" scope="singleton" lazy-init="default"
+		autowire="default" >
+		<property name="realisationDAO">
+			<ref bean="RealisationsDAO" />
+		</property>
+	</bean>
+	<bean id="commentairesPL" class="com.iporfilio.beans.CommentairesPL"
+		abstract="false" scope="singleton" lazy-init="default"
+		autowire="default">
+		<property name="commentaireDAO">
+			<ref bean="CommentairesDAO" />
+		</property>
+	</bean>
+	<bean id="categoriesPL" class="com.iporfilio.beans.CategoriesPL"
+		abstract="false" scope="singleton" lazy-init="default"
+		autowire="default" >
+		<property name="categoriesDAO">
+			<ref bean="CategoriesDAO" />
+		</property>
+	</bean></beans>
